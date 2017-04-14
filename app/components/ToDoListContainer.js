@@ -5,22 +5,46 @@ import AppBar from 'material-ui/AppBar';
 import ToDoList from './ToDoList'
 import TextField from 'material-ui/TextField'
 import ToDoListItem from './ToDoListItem'
+import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
+
+const ToDoListContainerStyle = {
+  width: '50%',
+  textAlign: 'center'
+};
+
+const TextInputStyle ={
+    width:'90%'
+}
 
 class ToDoListContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state= {
       sideNavOpen: false,
-      modalOpen: false
+      modalOpen: false,
+      children: []
     }
+  }
+
+  temp(e){
+    e.preventDefault();
+    console.log(this.state.children);
+    console.log('here');
   }
   
   render() {
     return (
-      <div>
-        <AppBar/>
+      <Paper zDepth={2} style={ToDoListContainerStyle}>
+        <form onSubmit={(e) => this.temp(e, 'lastName')}>
+          <TextField 
+            underlineShow={false}
+            style={TextInputStyle}
+          />
+        </form>
+          <Divider/>
           <ToDoList/>
-        </div>
+      </Paper>
     );
   }
 }

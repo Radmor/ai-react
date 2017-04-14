@@ -4,7 +4,14 @@ import ListItem from 'material-ui/List/ListItem'
 import IconButton from 'material-ui/IconButton';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import ContentClear from 'material-ui/svg-icons/content/clear'
+import Checkbox from 'material-ui/Checkbox';
+import Divider from 'material-ui/Divider';
 
+
+
+const ToDoListItemStyle ={
+    width:'90%'
+}
 class ToDoListItem extends React.Component{
     constructor(props) {
     super(props);
@@ -17,13 +24,19 @@ class ToDoListItem extends React.Component{
   render(){
       return(
         <ListItem>
-        <TextField
-            defaultValue={this.state.text}
-        />
-        <IconButton tooltip="SVG Icon">
-            <ContentClear />
-        </IconButton>
+            <Checkbox style={{ display: 'inline-block', width:''}}
+            />
+            <TextField
+                defaultValue={this.state.text}
+                underlineShow={false}
+                style={ToDoListItemStyle}
+            />
+            <IconButton tooltip="SVG Icon">
+                <ContentClear />
+            </IconButton>
+            <Divider/>
         </ListItem>
+        
       );
   }
 }
