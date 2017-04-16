@@ -21,22 +21,20 @@ class ToDoListContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state= {
-      sideNavOpen: false,
-      modalOpen: false,
-      children: []
+
     }
   }
 
-  temp(e){
+  createToDoListItem(e){
     e.preventDefault();
-    console.log(this.state.children);
+    console.log(this);
     console.log('here');
   }
   
   render() {
     return (
       <Paper zDepth={2} style={ToDoListContainerStyle}>
-        <form onSubmit={(e) => this.temp(e, 'lastName')}>
+        <form onSubmit={(e) => this.createToDoListItem(e, 'lastName')}>
           <TextField 
             underlineShow={false}
             style={TextInputStyle}
