@@ -86,6 +86,15 @@ class ToDoList extends React.Component{
             return false;
         }
     }
+
+    clearCompleted(e){
+        for(var i = this.state.items.length - 1; i>=0; i--){
+            if(this.state.items[i].completed === true){
+                this.state.items.splice(i, 1);
+            }
+        }
+        this.setState({items: this.state.items});
+    }
     
 
     render(){
@@ -115,6 +124,7 @@ class ToDoList extends React.Component{
                 <RaisedButton onClick={(e) => this.setFilter('all')} label="All"/>
                 <RaisedButton onClick={(e) => this.setFilter('active')} label="Active"/>
                 <RaisedButton onClick={(e) => this.setFilter('completed')} label="Completed"/>
+                <RaisedButton onClick={(e) => this.clearCompleted(e)} label="clear completed"/>
             </Paper>
             
       );
