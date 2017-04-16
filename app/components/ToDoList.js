@@ -20,22 +20,6 @@ const TextInputStyle ={
     width:'90%'
 }
 
-function filter(item, filter){
-        console.log(filter);
-        if(filter === 'active' && !item.completed){
-            // console.log('here');s
-            return true;
-        }
-        else if(filter === 'completed' && item.completed){
-            return true;
-        }
-        else if(filter === 'all'){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 
 
 class ToDoList extends React.Component{
@@ -87,6 +71,23 @@ class ToDoList extends React.Component{
         this.setState({filter:this.state.filter});
     }
 
+
+    filter(item, filter){
+        console.log(filter);
+        if(filter === 'active' && !item.completed){
+            // console.log('here');s
+            return true;
+        }
+        else if(filter === 'completed' && item.completed){
+            return true;
+        }
+        else if(filter === 'all'){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     
 
     render(){
@@ -108,7 +109,7 @@ class ToDoList extends React.Component{
                 <Divider/>
                 <List>
                     {
-                        this.state.items.filter((item, index) => {return filter(item, this.state.filter)}).map((item, index) => {
+                        this.state.items.filter((item, index) => {return this.filter(item, this.state.filter)}).map((item, index) => {
                             return <ToDoListItem value={item.value} handleDelete={(e) => this.deleteItem(e)} key={index} id={index} checked={item.completed} handleChecked={(e) => this.updateCompleted(e)}/>
                         })
                     }
