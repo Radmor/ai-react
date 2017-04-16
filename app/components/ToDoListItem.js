@@ -19,28 +19,32 @@ class ToDoListItem extends React.Component{
         this.state= {
             sideNavOpen: false,
             modalOpen: false,
-            text: 'default text',
-            deleted: false
+            text: 'default text'
         }
     }
 
     handleDelete(id) {
-        console.log('delete');
-        console.log(this);
         this.props.handleDelete(id);
-        console.log(this.props.id);
+    }
+
+    handleChecked(id){
+        this.props.handleChecked(id);
     }
 
     render(){
         return(
             <ListItem>
-                <Checkbox style={{ display: 'inline-block', width:''}}
+                <Checkbox
+                    style={{ display: 'inline-block', width:''}}
+                    checked={this.props.checked}
+                    onCheck={this.handleChecked.bind(this, this.props.id)}
                 />
                 <TextField
+                    value={this.props.value}
                     underlineShow={false}
                     style={ToDoListItemStyle}
                 />
-                <IconButton onClick={this.handleDelete.bind(this, 0)}>
+                <IconButton onClick={this.handleDelete.bind(this, this.props.id)}>
                     <ContentClear />
                 </IconButton>
                 <Divider/>
