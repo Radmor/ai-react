@@ -6,7 +6,6 @@ class WSClient {
     this.listeners = {};
 
     this.io.on('connect', (e) => {
-      console.log(e, 'Connected');
     });
 
     this.io.on('rooms:added', this.callListeners.bind(this, 'rooms:added'));

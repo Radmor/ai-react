@@ -73,9 +73,7 @@ class ToDoList extends React.Component{
 
 
     filter(item, filter){
-        console.log(filter);
         if(filter === 'active' && !item.completed){
-            // console.log('here');s
             return true;
         }
         else if(filter === 'completed' && item.completed){
