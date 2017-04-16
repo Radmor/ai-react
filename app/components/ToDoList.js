@@ -7,6 +7,7 @@ import AppBar from 'material-ui/AppBar'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import Divider from 'material-ui/Divider'
+import Checkbox from 'material-ui/Checkbox';
 
 
 const ToDoListStyle = {
@@ -25,7 +26,8 @@ class ToDoList extends React.Component{
         sideNavOpen: false,
         modalOpen: false,
         items:[],
-        currentInputValue:''
+        currentInputValue:'',
+        checkAll: false
         }
     }
 
@@ -50,9 +52,24 @@ class ToDoList extends React.Component{
         this.setState({items:this.state.items})
     }
 
+    handleCheckAll(e){
+        this.state.items = this.state.items.map((item) => {
+                            item.active = !this.state.checkAll;
+                            return item
+        })
+        this.setState({checkAll: !this.state.checkAll, items: this.state.items})
+        
+        
+    }
+
     render(){
         return(
             <Paper zDepth={2} style={ToDoListStyle}>
+                <Checkbox
+                    style={{ display: 'inline-block', width:''}}
+                    checked={this.state.checkAll}
+                    onCheck={(e) => this.handleCheckAll(e)}
+                />
                 <form onSubmit={(e) => this.addItem(e)}>
                     <TextField 
                         underlineShow={false}
