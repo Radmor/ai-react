@@ -8,6 +8,7 @@ import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import Divider from 'material-ui/Divider'
 import Checkbox from 'material-ui/Checkbox';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 const ToDoListStyle = {
@@ -19,6 +20,24 @@ const TextInputStyle ={
     width:'90%'
 }
 
+function filter(item, filter){
+        console.log(filter);
+        if(filter === 'active' && !item.completed){
+            // console.log('here');s
+            return true;
+        }
+        else if(filter === 'completed' && item.completed){
+            return true;
+        }
+        else if(filter === 'all'){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+
 class ToDoList extends React.Component{
     constructor(props) {
         super(props);
@@ -27,13 +46,14 @@ class ToDoList extends React.Component{
         modalOpen: false,
         items:[],
         currentInputValue:'',
-        checkAll: false
+        checkAll: false,
+        filter: 'all'
         }
     }
 
     addItem(e){
         e.preventDefault();
-        this.state.items.push({value:this.state.currentInputValue, active:false});
+        this.state.items.push({value:this.state.currentInputValue, completed:false});
         this.setState({currentInputValue:''});
         this.setState({state:this.state});
     }
@@ -47,20 +67,27 @@ class ToDoList extends React.Component{
         this.setState({currentInputValue:e.target.value})
     }
 
-    updateActive(id){
-        this.state.items[id].active = !this.state.items[id].active
+    updateCompleted(id){
+        this.state.items[id].completed = !this.state.items[id].completed
         this.setState({items:this.state.items})
     }
 
-    handleCheckAll(e){
+    handleCheckAll(){
         this.state.items = this.state.items.map((item) => {
-                            item.active = !this.state.checkAll;
-                            return item
+            item.completed = !this.state.checkAll;
+            return item
         })
         this.setState({checkAll: !this.state.checkAll, items: this.state.items})
         
         
     }
+
+    setFilter(filter){
+        this.state.filter = filter;
+        this.setState({filter:this.state.filter});
+    }
+
+    
 
     render(){
         return(
@@ -68,7 +95,7 @@ class ToDoList extends React.Component{
                 <Checkbox
                     style={{ display: 'inline-block', width:''}}
                     checked={this.state.checkAll}
-                    onCheck={(e) => this.handleCheckAll(e)}
+                    onCheck={(e) => this.handleCheckAll()}
                 />
                 <form onSubmit={(e) => this.addItem(e)}>
                     <TextField 
@@ -81,11 +108,14 @@ class ToDoList extends React.Component{
                 <Divider/>
                 <List>
                     {
-                        this.state.items.map((item, index) => {
-                            return <ToDoListItem value={item.value} handleDelete={(e) => this.deleteItem(e)} key={index} id={index} checked={item.active} handleChecked={(e) => this.updateActive(e)}/>
+                        this.state.items.filter((item, index) => {return filter(item, this.state.filter)}).map((item, index) => {
+                            return <ToDoListItem value={item.value} handleDelete={(e) => this.deleteItem(e)} key={index} id={index} checked={item.completed} handleChecked={(e) => this.updateCompleted(e)}/>
                         })
                     }
-                    </List>
+                </List>
+                <RaisedButton onClick={(e) => this.setFilter('all')} label="All"/>
+                <RaisedButton onClick={(e) => this.setFilter('active')} label="Active"/>
+                <RaisedButton onClick={(e) => this.setFilter('completed')} label="Completed"/>
             </Paper>
             
       );
