@@ -107,7 +107,7 @@ class ToDoList extends React.Component{
                 <Divider/>
                 <List>
                     {
-                        this.state.items.filter((item, index) => {return this.filter(item, this.state.filter)}).map((item, index) => {
+                        this.state.items.filter((item) => {return this.filter(item, this.state.filter)}).map((item, index) => {
                             return <ToDoListItem value={item.value} handleDelete={(e) => this.deleteItem(e)} key={index} id={index} checked={item.completed} handleChecked={(e) => this.updateCompleted(e)}/>
                         })
                     }
